@@ -27,6 +27,9 @@ applyLooseCORSPolicy(app);
 applyBodyParsing(app);
 applyLogging(app);
 
+const voteData = await fs.readFile(VOTE_FILE, 'utf-8');
+const votes = JSON.parse(voteData);
+
 app.get('/', (req, res) => {
   res.status(200).json({
     message: 'API is working!',
@@ -67,12 +70,7 @@ app.get('/api/descriptions', async (req, res) => {
 
 app.get('/api/vote', async (req, res) => {
   try {
-
-    const voteData = await fs.readFile(VOTE_FILE, 'utf-8');
-    const votes = JSON.parse(voteData);
-
     return res.status(200).send(votes);
-
   } catch (e) {
     res.status(400);
     throw Error(e);
@@ -87,15 +85,8 @@ app.post('/api/vote', async (req, res) => {
   }
 
   try {
-    const voteData = await fs.readFile(VOTE_FILE, 'utf-8');
-    const votes = JSON.parse(voteData);
-
     votes[name] += 1;
-
-    await fs.writeFile(VOTE_FILE, JSON.stringify(votes, null, 2));
-
     res.status(200).json(votes);
-
   } catch (e) {
     res.status(500);
     throw Error(e);
