@@ -1,0 +1,32 @@
+{
+  "version":  2,
+  "builds": [
+    {
+      "src": "src/index.js",
+      "use": "@vercel/node",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "includeFiles": [
+          "public/**",
+          "vote.json",
+          "secret.json"
+        ]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/images",
+      "dest": "/api/images.js"
+    },
+    {
+      "src": "/api/descriptions",
+      "dest": "/api/descriptions.js"
+    },
+    {
+      "src": "/api/vote",
+      "dest": "/api/vote.js",
+      "methods": ["GET", "POST", "OPTIONS"]
+    }
+  ]
+}
