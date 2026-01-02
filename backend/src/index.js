@@ -1,7 +1,8 @@
 import express from 'express';
 import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const path = "public/images/";
 import {
   applyRateLimiting,
   applyLooseCORSPolicy,
@@ -10,8 +11,13 @@ import {
   applyErrorCatching
 } from './api-middleware.js'
 
-const VOTE_FILE = "vote.json";
-const SECRET_FILE = "secret.json";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const publicPath = path.join(__dirname, '..', 'public');
+const imagesPath = path.join(publicPath, 'images');
+const VOTE_FILE = path.join(publicPath, 'vote.json');
+const SECRET_FILE = path.join(publicPath, 'secret.json');
 
 const app = express();
 const port = 53706;
@@ -34,7 +40,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/images', async (req, res) => {
   try {
-    const files = await fs.readdir(path);
+    const files = await fs.readdir(imagesPath);
 
     return res.status(200).send({
       files: files
