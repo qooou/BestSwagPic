@@ -21,6 +21,17 @@ applyLooseCORSPolicy(app);
 applyBodyParsing(app);
 applyLogging(app);
 
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'API is working!',
+    endpoints: [
+      '/api/images',
+      '/api/descriptions',
+      '/api/vote'
+    ]
+  });
+});
+
 app.get('/api/images', async (req, res) => {
   try {
     const files = await fs.readdir(path);
