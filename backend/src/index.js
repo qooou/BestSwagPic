@@ -2,7 +2,13 @@ import express from 'express';
 import fs from 'fs/promises';
 
 const path = "public/images/";
-import { applyRateLimiting, applyLooseCORSPolicy, applyBodyParsing, applyLogging, applyErrorCatching } from './api-middleware.js'
+import {
+  applyRateLimiting,
+  applyLooseCORSPolicy,
+  applyBodyParsing,
+  applyLogging,
+  applyErrorCatching
+} from './api-middleware.js'
 
 const VOTE_FILE = "vote.json";
 const SECRET_FILE = "secret.json";
@@ -14,12 +20,6 @@ applyRateLimiting(app);
 applyLooseCORSPolicy(app);
 applyBodyParsing(app);
 applyLogging(app);
-
-app.get('/api/hello-world', (req, res) => {
-  res.status(200).send({
-    msg: "Hello! :)"
-  })
-})
 
 app.get('/api/images', async (req, res) => {
   try {
