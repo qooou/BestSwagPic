@@ -16,17 +16,8 @@
   ],
   "routes": [
     {
-      "src": "/api/images",
-      "dest": "/api/images.js"
-    },
-    {
-      "src": "/api/descriptions",
-      "dest": "/api/descriptions.js"
-    },
-    {
-      "src": "/api/vote",
-      "dest": "/api/vote.js",
-      "methods": ["GET", "POST", "OPTIONS"]
+      "src": "/(.*)",
+      "dest": "src/index.js"
     }
   ]
 }
